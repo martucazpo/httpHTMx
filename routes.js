@@ -1,6 +1,3 @@
-// const fs = require('fs');
-// const http = require('http');
-// const path = require('path');
 let db = require("./db.js")
 const matchRoute = require("./matchRoute.js")
 const getBody = require("./getBody.js")
@@ -79,13 +76,12 @@ module.exports = (req, res)=>{
         res.end(taskStr)
     }
 
-    if (req.method == 'PUT' && req.url.endsWith("edit")) {
+    if (req.method === 'PUT' && req.url.endsWith("edit")) {
         matchRoute(req, req.url, '/todos/:id/edit')
         req.on('data', function (data) {
             getBody(req, data)
         })
         req.on('end', function () {
-            console.log("BODY ", req.body)
             db = db.map(todo => {
                 if (todo.id === req.params.id) {
                     todo.task = req.body.task
@@ -112,8 +108,7 @@ module.exports = (req, res)=>{
         })
     }
 
-    if (req.method == 'POST' && req.url.endsWith("add")) {
-       // matchRoute(req, req.url, '/todos/:id/edit')
+    if (req.method === 'POST' && req.url.endsWith("add")) {
         req.on('data', function (data) {
             getBody(req, data)
         })
@@ -121,7 +116,6 @@ module.exports = (req, res)=>{
             let newTask = {}
             newTask.task = req.body.task
             newTask.id = Math.ceil(Math.random() * 900000000).toString()
-            console.log(newTask)
             db = [newTask, ...db]
             let taskStr = ""
             let tasks = db.map(todo => {

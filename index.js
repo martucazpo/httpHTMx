@@ -1,7 +1,6 @@
 const fs = require('fs');
 const http = require('http');
 const path = require('path');
-//let db = require("./db.js")
 
 const port = 8080;
 const directoryName = './public';
@@ -21,7 +20,6 @@ const types = {
 const root = path.normalize(path.resolve(directoryName));
 
 const server = http.createServer((req, res) => {
-    console.log(`${req.method} ${req.url}`);
 
     const extension = path.extname(req.url).slice(1);
     const type = extension ? types[extension] : types.html;
