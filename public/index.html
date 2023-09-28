@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <form hx-post="/todos/add" hx-target="#list" >
+            <label for="task">WHAT TO DO:</label>
+            <input type="text" name="task" id="task" required />
+            <button type="submit">ADD TASK</button>
+        </form>
+    </div>
+    <ul hx-get="/getdata" hx-trigger="load" hx-target="this" hx-swap="innerHTML" id="list"></ul>
+    <script src="./htmx.js"></script>
+</body>
+</html>
