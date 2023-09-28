@@ -3,7 +3,7 @@ const matchRoute = require("./matchRoute.js")
 const getBody = require("./getBody.js")
 
 module.exports = (req, res)=>{
-    if (req.url === '/getdata') {
+    if (req.method === 'GET' && req.url === '/getdata') {
         let taskStr = ""
         let tasks = db.map(todo => {
             return (
@@ -13,7 +13,7 @@ module.exports = (req, res)=>{
                 </div>
                 <div>
                     <button hx-delete="/todos/${todo.id}/delete">DELETE</button>
-                    <button hx-put="/todos/${todo.id}/editform">EDIT</button>
+                    <button hx-get="/todos/${todo.id}/editform">EDIT</button>
                 </div>
             </li>`
             )
@@ -23,7 +23,7 @@ module.exports = (req, res)=>{
         res.end(taskStr)
     }
 
-    if (req.url.endsWith("delete") && matchRoute(req, req.url, '/todos/:id/delete')) {
+    if (req.method === 'DELETE' && req.url.endsWith("delete") && matchRoute(req, req.url, '/todos/:id/delete')) {
         db = db.filter(item => item.id !== req.params.id)
         let taskStr = ""
         let tasks = db.map(todo => {
@@ -34,7 +34,7 @@ module.exports = (req, res)=>{
                </div>
                <div>
                    <button hx-delete="/todos/${todo.id}/delete">DELETE</button>
-                   <button hx-put="/todos/${todo.id}/editform">EDIT</button>
+                   <button hx-get="/todos/${todo.id}/editform">EDIT</button>
                </div>
            </li>`
             )
@@ -44,7 +44,7 @@ module.exports = (req, res)=>{
         res.end(taskStr)
     }
 
-    if (req.url.endsWith("editform") && matchRoute(req, req.url, '/todos/:id/editform')) {
+    if (req.method === 'GET' && req.url.endsWith("editform") && matchRoute(req, req.url, '/todos/:id/editform')) {
         let taskStr = ""
         let tasks = db.map(todo => {
             if (todo.id === req.params.id) {
@@ -97,7 +97,7 @@ module.exports = (req, res)=>{
                    </div>
                    <div>
                        <button hx-delete="/todos/${todo.id}/delete">DELETE</button>
-                       <button hx-put="/todos/${todo.id}/editform">EDIT</button>
+                       <button hx-get="/todos/${todo.id}/editform">EDIT</button>
                    </div>
                </li>`
                 )
@@ -126,7 +126,7 @@ module.exports = (req, res)=>{
                    </div>
                    <div>
                        <button hx-delete="/todos/${todo.id}/delete">DELETE</button>
-                       <button hx-put="/todos/${todo.id}/editform">EDIT</button>
+                       <button hx-get="/todos/${todo.id}/editform">EDIT</button>
                    </div>
                </li>`
                 )
